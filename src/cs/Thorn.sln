@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31402.337
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thorn", "Thorn.csproj", "{2ACB95E9-EDCC-443B-AC40-0B04879F6EB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThornFrontEnd", "..\ThornFrontEnd\ThornFrontEnd.csproj", "{EFA3D7EF-38BF-4380-AE0B-6326B8DDF934}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2ACB95E9-EDCC-443B-AC40-0B04879F6EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ACB95E9-EDCC-443B-AC40-0B04879F6EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ACB95E9-EDCC-443B-AC40-0B04879F6EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFA3D7EF-38BF-4380-AE0B-6326B8DDF934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFA3D7EF-38BF-4380-AE0B-6326B8DDF934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFA3D7EF-38BF-4380-AE0B-6326B8DDF934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFA3D7EF-38BF-4380-AE0B-6326B8DDF934}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
