@@ -8,7 +8,7 @@ namespace Thorn
 {
     public enum TokenType
     {
-        VariableName,
+        Statement,
 
         ClassDeclaration,
         FunctionDeclaration,
@@ -25,10 +25,17 @@ namespace Thorn
     }
     public class Token
     {
+        public Token(string data, TokenType type, int lineNumber, int charPos)
+        {
+            Data = data;
+            Type = type;
+            LineNumber = lineNumber;
+            CharPos = charPos;
+        }
+        public Token() { }
+        public string Data;
+        public TokenType Type;
         public int LineNumber;
         public int CharPos;
-        public TokenType Type;
-        public string Data;
-
     }
 }

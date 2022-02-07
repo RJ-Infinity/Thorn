@@ -1,0 +1,6 @@
+{
+	"Files":[
+		"main.thorn"
+	],
+	"EntryPoint":"main.thorn@Program.Main"
+}
