@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Thorn
 {
-    class Lexer
+    public class Lexer
     {
         private static readonly char[] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        private static readonly char[] whitespace = { ' ', '\t', '\n', '\r' };
+        private static readonly char[] exprTerm = { '.', ';', '(', '=', '{', '}', ')', '[', ']','"'};
         public Lexer(string code)
         {
             Code = code;
@@ -19,27 +21,37 @@ namespace Thorn
         private int Index = 0;
         private List<Token> BufferedTokens = new List<Token>();
         public List<Token> Tokens = new List<Token>();
-        public void GenerateNextToken()
+        public bool GenerateNextToken()
         {
             if (BufferedTokens.Count > 0)
             {
                 Tokens.Add(BufferedTokens[0]);
-                return;
+                BufferedTokens.RemoveAt(0);
+                return true;
             }
-            int initialLN = LineNumber;
-            int initialCP = CharPos;
             string currExpr = "";
             bool inStr = false;
             TokenType? typeGuess = null;
+            int initialLN=-1;//assigned so the complier doesent complain
+            int initialCP=-1;//assigned so the complier doesent complain
+            bool resetExprStart = true;
             while (Index < Code.Length)
             {
+                if (resetExprStart)
+                {
+                    initialLN=LineNumber;
+                    initialCP=CharPos;
+                    resetExprStart = false;
+                }
                 if (!inStr)
                 {
                     if (Code[Index] == '=')
                     {
                         Tokens.Add(new Token(currExpr, TokenType.Statement, initialLN, initialCP));
                         BufferedTokens.Add(new Token("=", TokenType.Assignment, LineNumber, CharPos));
-                        return;
+                        Index++;//must increment index when returning so the same char doesent get reevaled
+                        CharPos++;
+                        return true;
                     }
                     else if (Code[Index] == '"')
                     {
@@ -48,27 +60,65 @@ namespace Thorn
                     }
                     else if (numbers.Contains(Code[Index]) && (typeGuess == null))
                     {
-
+                        typeGuess = TokenType.NumberLitteral;
+                    }
+                    else if (Code[Index] == ';')
+                    {
+                        if (typeGuess == null)
+                        {
+                            typeGuess = TokenType.Statement;
+                        }
+                        Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
+                        BufferedTokens.Add(new Token(";", TokenType.ExpresionEnd, LineNumber, CharPos));
+                        Index++;//must increment index when returning so the same char doesent get reevaled
+                        CharPos++;
+                        return true;
+                    }
+                    else if (whitespace.Contains(Code[Index]))
+                    {
+                        resetExprStart = currExpr.Length == 0;//if the expresion hasnt started yet reset the LN and CP
+                        int i = Index;
+                        while (i < Code.Length && whitespace.Contains(Code[i])) { i++; }
+                        if (i == Code.Length)
+                        {
+                            if(currExpr.Length > 0)
+                            {
+                                Console.WriteLine(currExpr.Length);
+                                Console.WriteLine("'"+currExpr +"'");
+                                Debug.Assert(typeGuess != null, "The File Ended without a valid expression");
+                                BufferedTokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
+                                return true;
+                            }
+                            return false;
+                        }
+                        //Debug.Assert(exprTerm.Contains(Code[i]), "There are two expresions back to back");
+                    }
+                    if (!whitespace.Contains(Code[Index]))
+                    {
+                        currExpr += Code[Index];
                     }
                 }
-                else if (Code[Index] == '"')
+                else 
                 {
-                    inStr = false;
+                    currExpr += Code[Index];
+                    if (Code[Index] == '"')
+                    {
+                        inStr = false;
+                    }
                 }
                 if (Code[Index] == '\n')
                 {
                     LineNumber++;
                     CharPos = 0;
                 }
-                currExpr += Code[Index];
-                CharPos++;
+                else
+                {
+                    CharPos++;
+                }
                 Index++;
             }
-            if (Index < Code.Length)
-            {
-                //we reached the end of the code block for now just return
-                return;
-            }
+            //we reached the end of the code block for now just return
+            return false;
         }
     }
 }

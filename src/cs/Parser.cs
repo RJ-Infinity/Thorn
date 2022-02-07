@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Thorn
 {
-    class Parser
+    public class Parser
     {
     }
 }

@@ -15,7 +15,8 @@ namespace Thorn
         
         OpenBrackets,
         CloseBrackets,
-        
+        ExpresionEnd,
+
         newClassOperator,
         Assignment,
         TypeDecleration,
