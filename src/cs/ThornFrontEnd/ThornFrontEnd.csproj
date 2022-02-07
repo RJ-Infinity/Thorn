@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="RJJSON-v0.5">
+      <HintPath>..\..\..\..\cs\JSON\RJJSON-v0.5.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
