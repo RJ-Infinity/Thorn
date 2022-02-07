@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ThornFrontEnd": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\rjinf\\RJ_Infinity\\Thorn\\src\\testProject\\project.json"
+    }
+  }
+}
