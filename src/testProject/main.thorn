@@ -1,15 +1,23 @@
-
-
 $ Testþ
 {
+	@std;
+
+
 	function test = () {
 
 	}
-	*byte = *00000000;
+	#byte = #00000000;
 	£class(inherits)
 	{
+		(){
+
+		}
+		[]{
+
+		}
 		more variables = () {
-			//code
+			std.
+			//more code
 		}
 	}
 }

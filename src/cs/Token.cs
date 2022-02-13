@@ -9,10 +9,14 @@ namespace Thorn
     public enum TokenType
     {
         Statement,
+        Seperator,
+
+        NumberLitteralDeclaration,
+        StringLetteralDeclaration,
 
         ClassDeclaration,
-        //FunctionDeclaration,
         Namespace,
+        Include,
         
         OpenBrackets,
         CloseBrackets,
@@ -24,6 +28,7 @@ namespace Thorn
         ByteLitteral,
         StringLitteral,
         NumberLitteral,
+
     }
     public class Token
     {

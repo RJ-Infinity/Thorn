@@ -47,8 +47,8 @@ namespace Thorn
                 Debug.Assert(file.Type == JSON.Types.STRING, "The Json files must be a string");
                 Debug.Assert(File.Exists(file.StringData),"The File given "+file.StringData+" wasnt found");
                 Lexer lexer = new Lexer(File.ReadAllText(file.StringData));
-                while (lexer.GenerateNextToken()) { }
-                foreach(Token token in lexer.Tokens)
+                lexer.GenerateAllTokens();
+                foreach (Token token in lexer.Tokens)
                 {
                     Console.WriteLine(file.StringData+":"+token.ToString(true));
                 }

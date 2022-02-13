@@ -10,7 +10,6 @@ namespace Thorn
     {
         private static readonly char[] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         private static readonly char[] whitespace = { ' ', '\t', '\n', '\r' };
-        private static readonly char[] exprTerm = { '.', ';', '(', '=', '{', '}', ')', '[', ']','"'};
         private static readonly char[] openBrackets = { '(', '{', '[', };
         private static readonly char[] closeBrackets = { ')', '}', ']', };
         public Lexer(string code)
@@ -23,6 +22,10 @@ namespace Thorn
         private int Index = 0;
         private List<Token> BufferedTokens = new List<Token>();
         public List<Token> Tokens = new List<Token>();
+        public void GenerateAllTokens()
+        {
+            while (GenerateNextToken()) { };
+        }
         public bool GenerateNextToken()
         {
             if (BufferedTokens.Count > 0)
@@ -87,6 +90,44 @@ namespace Thorn
                         CharPos++;
                         return true;
                     }
+                    else if (Code[Index] == '@')
+                    {
+                        if (currExpr.Length > 0)
+                        {
+                            if (typeGuess == null)
+                            {
+                                typeGuess = TokenType.Statement;
+                            }
+                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
+                            BufferedTokens.Add(new Token("@", TokenType.Include, LineNumber, CharPos));
+                        }
+                        else
+                        {
+                            Tokens.Add(new Token("@", TokenType.Include, LineNumber, CharPos));
+                        }
+                        Index++;//must increment index when returning so the same char doesent get re-evaled
+                        CharPos++;
+                        return true;
+                    }
+                    else if (Code[Index] == '.')
+                    {
+                        if (currExpr.Length > 0)
+                        {
+                            if (typeGuess == null)
+                            {
+                                typeGuess = TokenType.Statement;
+                            }
+                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
+                            BufferedTokens.Add(new Token(".", TokenType.Seperator, LineNumber, CharPos));
+                        }
+                        else
+                        {
+                            Tokens.Add(new Token(".", TokenType.Seperator, LineNumber, CharPos));
+                        }
+                        Index++;//must increment index when returning so the same char doesent get re-evaled
+                        CharPos++;
+                        return true;
+                    }
                     else if (Code[Index] == '£')
                     {
                         if (currExpr.Length > 0)
@@ -106,7 +147,7 @@ namespace Thorn
                         CharPos++;
                         return true;
                     }
-                    else if (Code[Index] == '*')
+                    else if (Code[Index] == '#')
                     {
                         if (currExpr.Length > 0)
                         {
@@ -115,11 +156,49 @@ namespace Thorn
                                 typeGuess = TokenType.Statement;
                             }
                             Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token("*", TokenType.ByteLitteral, LineNumber, CharPos));
+                            BufferedTokens.Add(new Token("#", TokenType.ByteLitteral, LineNumber, CharPos));
                         }
                         else
                         {
-                            Tokens.Add(new Token("*", TokenType.ByteLitteral, LineNumber, CharPos));
+                            Tokens.Add(new Token("#", TokenType.ByteLitteral, LineNumber, CharPos));
+                        }
+                        Index++;//must increment index when returning so the same char doesent get re-evaled
+                        CharPos++;
+                        return true;
+                    }
+                    else if (Code[Index] == '~' && currExpr.Length == 0)
+                    {
+                        if (currExpr.Length > 0)
+                        {
+                            if (typeGuess == null)
+                            {
+                                typeGuess = TokenType.Statement;
+                            }
+                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
+                            BufferedTokens.Add(new Token("~", TokenType.NumberLitteralDeclaration, LineNumber, CharPos));
+                        }
+                        else
+                        {
+                            Tokens.Add(new Token("~", TokenType.NumberLitteralDeclaration, LineNumber, CharPos));
+                        }
+                        Index++;//must increment index when returning so the same char doesent get re-evaled
+                        CharPos++;
+                        return true;
+                    }
+                    else if (Code[Index] == '`' && currExpr.Length == 0)
+                    {
+                        if (currExpr.Length > 0)
+                        {
+                            if (typeGuess == null)
+                            {
+                                typeGuess = TokenType.Statement;
+                            }
+                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
+                            BufferedTokens.Add(new Token("`", TokenType.StringLetteralDeclaration, LineNumber, CharPos));
+                        }
+                        else
+                        {
+                            Tokens.Add(new Token("`", TokenType.StringLetteralDeclaration, LineNumber, CharPos));
                         }
                         Index++;//must increment index when returning so the same char doesent get re-evaled
                         CharPos++;

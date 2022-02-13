@@ -1,6 +1,7 @@
 {
 	"Files":[
-		"main.thorn"
+		"main.thorn",
+		"std.thorn"
 	],
 	"EntryPoint":"main.thorn@Program.Main"
 }
