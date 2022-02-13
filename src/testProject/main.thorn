@@ -1,3 +1,15 @@
-ah = //this should be a comment
-"s j0d";
-Test()["test"];
+
+
+$ Testþ
+{
+	function test = () {
+
+	}
+	*byte = *00000000;
+	£class(inherits)
+	{
+		more variables = () {
+			//code
+		}
+	}
+}

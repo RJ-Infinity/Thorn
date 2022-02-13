@@ -11,7 +11,8 @@ namespace Thorn
         Statement,
 
         ClassDeclaration,
-        FunctionDeclaration,
+        //FunctionDeclaration,
+        Namespace,
         
         OpenBrackets,
         CloseBrackets,
@@ -19,8 +20,8 @@ namespace Thorn
 
         newClassOperator,
         Assignment,
-        TypeDecleration,
 
+        ByteLitteral,
         StringLitteral,
         NumberLitteral,
     }
@@ -38,9 +39,10 @@ namespace Thorn
         public TokenType Type;
         public int LineNumber;
         public int CharPos;
-        public override string ToString()
+        public override string ToString() => ToString(false);
+        public string ToString(bool addQuotes)
         {
-            return LineNumber + ":" + CharPos + "[" + Type + "]\t" + Data;
+            return LineNumber + ":" + CharPos + "[" + Type + "]\t'" + Data+"'";
         }
     }
 }
