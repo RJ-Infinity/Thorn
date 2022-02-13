@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="RJJSON-v0.5">
-      <HintPath>..\..\..\..\cs\JSON\RJJSON-v0.5.dll</HintPath>
+    <Reference Include="RJJSON">
+      <HintPath>..\..\..\..\cs\JSON\bins\0.5\RJJSON.dll</HintPath>
     </Reference>
   </ItemGroup>
 

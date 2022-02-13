@@ -1,2 +1,3 @@
-ah = "s j0d";
-Test();
+ah = //this should be a comment
+"s j0d";
+Test()["test"];

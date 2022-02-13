@@ -50,7 +50,7 @@ namespace Thorn
                 while (lexer.GenerateNextToken()) { }
                 foreach(Token token in lexer.Tokens)
                 {
-                    Console.WriteLine(token.LineNumber + ":" + token.CharPos + "[" + token.Type + "]" + token.Data);
+                    Console.WriteLine(file.StringData+":"+token);
                 }
             }
         }

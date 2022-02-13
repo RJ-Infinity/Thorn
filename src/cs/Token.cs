@@ -38,5 +38,9 @@ namespace Thorn
         public TokenType Type;
         public int LineNumber;
         public int CharPos;
+        public override string ToString()
+        {
+            return LineNumber + ":" + CharPos + "[" + Type + "]\t" + Data;
+        }
     }
 }
