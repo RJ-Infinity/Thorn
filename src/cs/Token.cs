@@ -9,6 +9,7 @@ namespace Thorn
     public enum TokenType
     {
         Statement,
+        Return,
         Seperator,
 
         NumberLitteralDeclaration,
@@ -26,7 +27,9 @@ namespace Thorn
         Assignment,
 
         ByteLitteral,
+        FunctionLitteral,
         StringLitteral,
+        CharLitteral,
         NumberLitteral,
 
     }

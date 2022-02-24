@@ -10,13 +10,33 @@ namespace Thorn
     {
         private static readonly char[] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         private static readonly char[] whitespace = { ' ', '\t', '\n', '\r' };
-        private static readonly char[] openBrackets = { '(', '{', '[', };
-        private static readonly char[] closeBrackets = { ')', '}', ']', };
+        private static readonly Dictionary<char, TokenType> keyChars = new Dictionary<char, TokenType>
+        {
+            {'=', TokenType.Assignment},
+            {'$', TokenType.Namespace},
+            {'@', TokenType.Include},
+            {'.', TokenType.Seperator},
+            {'£', TokenType.ClassDeclaration},
+            {'#', TokenType.ByteLitteral},
+            {'~', TokenType.NumberLitteralDeclaration},
+            {'`', TokenType.StringLetteralDeclaration},
+            {';', TokenType.ExpresionEnd},
+            {'¬', TokenType.CharLitteral},
+            {'§', TokenType.FunctionLitteral},
+            {'(', TokenType.OpenBrackets},
+            {'{', TokenType.OpenBrackets},
+            {'[', TokenType.OpenBrackets},
+            {')', TokenType.CloseBrackets},
+            {'}', TokenType.CloseBrackets},
+            {']', TokenType.CloseBrackets},
+            {'‡', TokenType.newClassOperator},
+            {'→', TokenType.Return},
+        };
         public Lexer(string code)
         {
             Code = code;
         }
-        public int LineNumber = 1;// this starts at one as files dont have a line 0-
+        public int LineNumber = 1;// this starts at one as files dont have a line 0
         public int CharPos = 0;
         public string Code;
         private int Index = 0;
@@ -52,7 +72,7 @@ namespace Thorn
                 }
                 if (!inStr && !comment)
                 {
-                    if (Code[Index] == '=')
+                    if (keyChars.ContainsKey(Code[Index]))
                     {
                         if (currExpr.Length > 0)
                         {
@@ -61,182 +81,11 @@ namespace Thorn
                                 typeGuess = TokenType.Statement;
                             }
                             Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token("=", TokenType.Assignment, LineNumber, CharPos));
+                            BufferedTokens.Add(new Token(Code[Index].ToString(), keyChars[Code[Index]], LineNumber, CharPos));
                         }
                         else
                         {
-                            Tokens.Add(new Token("=", TokenType.Assignment, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (Code[Index] == '$')
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token("$", TokenType.Namespace, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token("$", TokenType.Namespace, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (Code[Index] == '@')
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token("@", TokenType.Include, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token("@", TokenType.Include, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (Code[Index] == '.')
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token(".", TokenType.Seperator, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token(".", TokenType.Seperator, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (Code[Index] == '£')
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token("£", TokenType.ClassDeclaration, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token("£", TokenType.ClassDeclaration, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (Code[Index] == '#')
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token("#", TokenType.ByteLitteral, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token("#", TokenType.ByteLitteral, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (Code[Index] == '~' && currExpr.Length == 0)
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token("~", TokenType.NumberLitteralDeclaration, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token("~", TokenType.NumberLitteralDeclaration, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (Code[Index] == '`' && currExpr.Length == 0)
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token("`", TokenType.StringLetteralDeclaration, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token("`", TokenType.StringLetteralDeclaration, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (openBrackets.Contains(Code[Index]))
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token(Code[Index].ToString(), TokenType.OpenBrackets, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token(Code[Index].ToString(), TokenType.OpenBrackets, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
-                    }
-                    else if (closeBrackets.Contains(Code[Index]))
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token(Code[Index].ToString(), TokenType.CloseBrackets, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token(Code[Index].ToString(), TokenType.CloseBrackets, LineNumber, CharPos));
+                            Tokens.Add(new Token(Code[Index].ToString(), keyChars[Code[Index]], LineNumber, CharPos));
                         }
                         Index++;//must increment index when returning so the same char doesent get re-evaled
                         CharPos++;
@@ -251,25 +100,6 @@ namespace Thorn
                     {
                         typeGuess = TokenType.NumberLitteral;
                     }
-                    else if (Code[Index] == ';')
-                    {
-                        if (currExpr.Length > 0)
-                        {
-                            if (typeGuess == null)
-                            {
-                                typeGuess = TokenType.Statement;
-                            }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token(";", TokenType.ExpresionEnd, LineNumber, CharPos));
-                        }
-                        else
-                        {
-                            Tokens.Add(new Token(";", TokenType.ExpresionEnd, LineNumber, CharPos));
-                        }
-                        Index++;//must increment index when returning so the same char doesent get reevaled
-                        CharPos++;
-                        return true;
-                    }
                     else if (whitespace.Contains(Code[Index]))
                     {
                         resetExprStart = currExpr.Length == 0;//if the expresion hasnt started yet reset the LN and CP
@@ -282,13 +112,6 @@ namespace Thorn
                             Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
                             return true;
                         }
-                    }
-                    else if (Code[Index] == '+' && currExpr.Length == 0)
-                    {
-                        Tokens.Add(new Token("+", TokenType.newClassOperator, LineNumber, CharPos));
-                        Index++;//must increment index when returning so the same char doesent get re-evaled
-                        CharPos++;
-                        return true;
                     }
                     else if (
                         Index > 0 &&

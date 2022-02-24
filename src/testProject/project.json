@@ -3,5 +3,5 @@
 		"main.thorn",
 		"std.thorn"
 	],
-	"EntryPoint":"main.thorn@Program.Main"
+	"EntryPoint":"Program.Main"
 }

@@ -1,13 +1,15 @@
 $std{
 	£uint8{
+		#uint;
 		(){
-			
+			uint = 0;
 		}
 		~0x{
 
 		}
-		`C{
-
+		§AsUint()#{→←.uint}
+		§+(uint8 addto)uint8{
+			
 		}
 	}
 }

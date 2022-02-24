@@ -1,9 +1,9 @@
-$ Testþ
+$Testþ
 {
 	@std;
 
 
-	function test = () {
+	§ test = () {
 
 	}
 	#byte = #00000000;
