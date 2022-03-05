@@ -11,6 +11,7 @@ namespace Thorn
         Statement,
         Return,
         Seperator,
+        ListSeperator,
 
         NumberLitteralDeclaration,
         StringLetteralDeclaration,

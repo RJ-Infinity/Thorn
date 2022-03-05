@@ -16,6 +16,7 @@ namespace Thorn
             {'$', TokenType.Namespace},
             {'@', TokenType.Include},
             {'.', TokenType.Seperator},
+            {',', TokenType.ListSeperator},
             {'£', TokenType.ClassDeclaration},
             {'#', TokenType.ByteLitteral},
             {'~', TokenType.NumberLitteralDeclaration},
