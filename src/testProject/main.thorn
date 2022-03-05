@@ -16,7 +16,7 @@ $Testþ
 
 		}
 		more variables = () {
-			std.
+			std.test("string1","string2");
 			//more code
 		}
 	}
