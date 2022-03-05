@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Thorn
 {
-    class Tree<T>
+    public class Tree<T> : IEnumerable<Tree<T>>
     {
         private List<Tree<T>> childNodes;
         public T Data;
@@ -24,5 +25,9 @@ namespace Thorn
         {
             get => childNodes[i];
         }
+
+        public IEnumerator<Tree<T>> GetEnumerator() => childNodes.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => childNodes.GetEnumerator();
+        public void Add(Tree<T> subTree) => childNodes.Add(subTree);
     }
 }
