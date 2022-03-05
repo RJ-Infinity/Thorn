@@ -81,12 +81,12 @@ namespace Thorn
                             {
                                 typeGuess = TokenType.Statement;
                             }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
-                            BufferedTokens.Add(new Token(Code[Index].ToString(), keyChars[Code[Index]], LineNumber, CharPos));
+                            Tokens.Add(new FileToken(currExpr, typeGuess.Value, initialLN, initialCP));
+                            BufferedTokens.Add(new FileToken(Code[Index].ToString(), keyChars[Code[Index]], LineNumber, CharPos));
                         }
                         else
                         {
-                            Tokens.Add(new Token(Code[Index].ToString(), keyChars[Code[Index]], LineNumber, CharPos));
+                            Tokens.Add(new FileToken(Code[Index].ToString(), keyChars[Code[Index]], LineNumber, CharPos));
                         }
                         Index++;//must increment index when returning so the same char doesent get re-evaled
                         CharPos++;
@@ -110,7 +110,7 @@ namespace Thorn
                             {
                                 typeGuess = TokenType.Statement;
                             }
-                            Tokens.Add(new Token(currExpr, typeGuess.Value, initialLN, initialCP));
+                            Tokens.Add(new FileToken(currExpr, typeGuess.Value, initialLN, initialCP));
                             return true;
                         }
                     }
