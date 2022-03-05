@@ -33,6 +33,7 @@ namespace Thorn
         CharLitteral,
         NumberLitteral,
 
+        NULL,// for when there isnt a token needed
     }
     public class Token
     {
