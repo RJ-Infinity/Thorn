@@ -51,7 +51,7 @@
     <Compile Include="Parser.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Operation.cs" />
-    <Compile Include="Tree.cs" />
+    <Compile Include="Graph.cs" />
     <None Include="Parserold.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
