@@ -51,6 +51,17 @@ namespace Thorn
         {
             return "[" + Type + "]\t'" + Data + "'";
         }
+        public static bool operator == (Token t1, Token t2)
+        {
+            return false;
+        }
+        public static bool operator !=(Token t1, Token t2) => !(t1 == t2);
+        public override bool Equals(object o)
+        {
+            if (o == null || !typeof(Token).IsInstanceOfType(o)) { return false; }
+            return (Token)o == this;
+        }
+        public override int GetHashCode() => base.GetHashCode();
     }
     public class FileToken : Token
     {
