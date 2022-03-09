@@ -53,7 +53,7 @@ namespace Thorn
         }
         public static bool operator == (Token t1, Token t2)
         {
-            return false;
+            return t1.Data == t2.Data && t1.Type == t2.Type;
         }
         public static bool operator !=(Token t1, Token t2) => !(t1 == t2);
         public override bool Equals(object o)
