@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Graph
 {
-    public class NamedGraph<T>
+    public class NamedGraph<T> : IEnumerable<T>
     {
         public NamedGraph(string rootNode, T data, List<string> children)
         {
@@ -52,6 +52,16 @@ namespace Graph
         public void ChangeRoot(string newRoot)
         {
             root = newRoot;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
     public class Node<T>

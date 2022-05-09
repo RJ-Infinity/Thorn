@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RJJSON;
+using Graph;
 
 namespace Thorn
 {
@@ -53,6 +54,50 @@ namespace Thorn
                     Console.WriteLine(file.StringData+":"+token.ToString(true));
                 }
             }
+        }
+        public static void tMain(string[] args)
+        {
+            NamedGraph<string> ng = new NamedGraph<string>
+            ("root", "this is the root", new List<string>
+                {
+                    "child0",
+                    "child1",
+                    "child2",
+                    "child3"
+                }
+            )
+            {
+                {
+                    "child0",
+                    "this is a child to the root",
+                    new List<string> {
+                        "grandchild0,0",
+                        "grandchild0,1",
+                        "grandchild0,2",
+                        "grandchild0,3"
+                    }
+                },
+                {
+                    "child1",
+                    "this is the second child",
+                    new List<string>
+                    {
+                        "grandchild1,0",
+                        "grandchild1,1"
+                    }
+                },
+                {
+                    "grandchild0,1",
+                    "this is the second grandchild of the root",
+                    new List<string>()
+                }
+            };
+            Console.WriteLine(ng.Name);
+            Console.WriteLine(ng.Data);
+            Console.WriteLine(ng[0].Name);
+            Console.WriteLine(ng[0].Data);
+            Console.WriteLine(ng[0][1].Name);
+            Console.WriteLine(ng[0][1].Data);
         }
     }
 }
