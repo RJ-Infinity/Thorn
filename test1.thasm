@@ -1,0 +1,8 @@
+mov 10 a
+mov 11 b
+mov 5 c
+
+add a b
+sub a c
+dump
+halt
